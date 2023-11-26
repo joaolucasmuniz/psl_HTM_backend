@@ -10,4 +10,8 @@ usersRouter.get('/', authetication, usersController.getAllClients);
 
 usersRouter.get('/:id', authetication, usersController.getClientsById);
 
+usersRouter.post('/', authetication, usersController.createClient);
+
+usersRouter.delete('/:id', authetication, usersController.deleteClient);
+
 module.exports = usersRouter;
