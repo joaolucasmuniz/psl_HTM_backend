@@ -8,7 +8,7 @@ const getAllClients = async (accessLevel) => {
 const getClientsById = async (id, accessLevel) => {
   const clients = await userModel.getClientsById(id, accessLevel);
   if (clients.length === 0 || !clients) {
-    const error = new Error('Cliente não encontrado');
+    const error = new Error('cliente não encontrado / não autorizado');
     error.status = 400;
     throw error;
   }

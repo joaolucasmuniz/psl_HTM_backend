@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.json());
 
-app.listen(3001, () => {
+app.listen(3002, () => {
   console.log('Online');
 });
 app.get('/', (_request, response) => {
@@ -18,9 +18,10 @@ app.use('/users', usersRouter);
 
 app.use((err, _req, res, _next) => {
   if (!err.status) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: err });
   } else {
     res.status(err.status).json({ error: err.message });
+    console.log(err); 
   }
 });
 

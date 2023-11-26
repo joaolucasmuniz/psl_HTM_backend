@@ -1,7 +1,7 @@
 const db = require('../Database/config');
 
 const getAllClients = async (accessLevel) => new Promise((resolve, reject) => {
-  db.all('SELECT id, name, phone, access_level FROM clients WHERE access_level <= ?',
+  db.all('SELECT id, name FROM clients WHERE access_level <= ?',
     [accessLevel], (err, row) => {
       if (err) {
         reject(err);
@@ -17,6 +17,7 @@ const getClientsById = async (id, accessLevel) => new Promise((resolve, reject) 
       if (err) {
         reject(err);
       } else {
+        console.log(row);
         resolve(row);
       }
     });

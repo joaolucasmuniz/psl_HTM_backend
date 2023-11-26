@@ -7,11 +7,12 @@ const generateToken = async (payload) => {
   return token;
 };
 
-const verifyToken = async (token) => {
-  const decoded = jwt.verify(token, JWT_SECRET);
-
-  return decoded;
-};
+const verifyToken = async (token) => new Promise((resolve, reject) => {
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) return reject(err);
+    return resolve(decoded);
+  });
+});
 
 module.exports = {
   generateToken,

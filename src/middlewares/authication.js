@@ -1,22 +1,36 @@
+const jwt = require('jsonwebtoken');
 const { verifyToken } = require('../utils/jwt');
 
-const authetication = (req, res, next) => {
+const handleTokenVerificationError = (res, error) => {
+  console.error('Erro ao verificar token:', error);
+
+  switch (true) {
+  case error instanceof jwt.JsonWebTokenError:
+    return res.status(401).json({ message: 'Token inválido' });
+  case error instanceof jwt.TokenExpiredError:
+    return res.status(401).json({ message: 'Token expirado' });
+  default:
+    return res.status(401).json({ message: 'Erro desconhecido ao verificar o token' });
+  }
+};
+
+const authentication = async (req, res, next) => {
   const { authorization } = req.headers;
+
   if (!authorization) {
     return res.status(401).json({ message: 'Token não encontrado' });
   }
 
-  const user = verifyToken(authorization);
-
-  if (!user) {
-    return res.status(401).json({ message: 'Token expirado ou inválido' });
+  try {
+    const user = await verifyToken(authorization);
+    req.user = user;
+  } catch (error) {
+    handleTokenVerificationError(res, error);
   }
-
-  req.user = Promise.resolve(user);
 
   next();
 };
 
 module.exports = {
-  authetication,
+  authentication,
 }; 
