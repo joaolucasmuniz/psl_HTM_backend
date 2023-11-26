@@ -18,7 +18,6 @@ app.use('/users', usersRouter);
 
 app.use((err, _req, res, _next) => {
   if (!err.status) {
-    console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
   } else {
     res.status(err.status).json({ error: err.message });

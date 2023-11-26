@@ -13,6 +13,21 @@ const getAllClients = async (req, res, next) => {
   }
 };
 
+const getClientsById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { accessLevel } = await req.user;
+
+    const clients = await usersService.getClientsById(id, accessLevel);
+
+    res.status(200).json(clients);
+  } catch (error) {
+    console.error('Erro na função getClientsById:', error);
+    next(error);
+  }
+};
+
 module.exports = {
   getAllClients,
+  getClientsById,
 };

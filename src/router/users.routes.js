@@ -8,4 +8,6 @@ const usersRouter = Router();
 
 usersRouter.get('/', authetication, usersController.getAllClients);
 
+usersRouter.get('/:id', authetication, usersController.getClientsById);
+
 module.exports = usersRouter;

@@ -7,6 +7,7 @@ const login = async (req, res, next) => {
     
     res.status(200).json({ token });
   } catch (error) {
+    console.error('Erro na função login:', error);
     next(error);
   }
 };
