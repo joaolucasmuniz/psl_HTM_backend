@@ -1,12 +1,14 @@
 const express = require('express');
 const { loginRouter, clientRouter } = require('./router');
 
+const PORT = process.env.PORT || 3001;
+
 const app = express();
 
 app.use(express.json());
 
-app.listen(3001, () => {
-  console.log('Online');
+app.listen(PORT, () => {
+  console.log(`Online na porta ${PORT}`);
 });
 app.get('/', (_request, response) => {
   response.status(200).send({ mensagem: 'Online' });

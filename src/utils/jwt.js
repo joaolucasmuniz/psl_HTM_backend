@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = '123456';
+const JWT_SECRET = process.env.JWT_SECRET || 'segredo';
 
 const generateToken = async (payload) => {
   const token = jwt.sign(payload, JWT_SECRET);
