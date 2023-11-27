@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { loginRouter, clientRouter } = require('./router');
 
 const PORT = process.env.PORT || 3001;
@@ -6,6 +7,13 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.json());
+
+app.use(cors(
+  { 
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE'],
+  },
+));
 
 app.listen(PORT, () => {
   console.log(`Online na porta ${PORT}`);
