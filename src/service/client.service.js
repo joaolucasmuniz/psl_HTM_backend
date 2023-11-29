@@ -1,18 +1,18 @@
-const { userModel } = require('../model');
+const { clientModel } = require('../model');
 
 const getAllClients = async (accessLevel) => {
-  const clients = await userModel.getAllClients(accessLevel);
+  const clients = await clientModel.getAllClients(accessLevel);
   return clients;
 };
 
 const getClientsById = async (id, accessLevel) => {
-  const clients = await userModel.getClientsById(id, accessLevel);
-  if (clients.length === 0 || !clients) {
+  const client = await clientModel.getClientsById(id, accessLevel);
+  if (client.length === 0 || !client) {
     const error = new Error('cliente não encontrado / não autorizado');
     error.status = 400;
     throw error;
   }
-  return clients;
+  return client;
 };
 
 const createClient = async (values, accessLevelUser) => {
@@ -22,13 +22,13 @@ const createClient = async (values, accessLevelUser) => {
     error.status = 401;
     throw error;
   }
-  const clients = await userModel.createClient(values);
-  return clients;
+  const client = await clientModel.createClient(values);
+  return client;
 };
 
 const deleteClient = async (id, accessLevelUser) => {
-  const clients = await userModel.deleteClient(id, accessLevelUser);
-  return clients;
+  const client = await clientModel.deleteClient(id, accessLevelUser);
+  return client;
 };
 
 module.exports = {
