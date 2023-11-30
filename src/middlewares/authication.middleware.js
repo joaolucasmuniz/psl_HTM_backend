@@ -6,11 +6,11 @@ const handleTokenVerificationError = (res, error) => {
 
   switch (true) {
   case error instanceof jwt.JsonWebTokenError:
-    return res.status(401).json({ message: 'Token inválido' });
+    return res.status(401).json({ error: 'Token inválido' });
   case error instanceof jwt.TokenExpiredError:
-    return res.status(401).json({ message: 'Token expirado' });
+    return res.status(401).json({ error: 'Token expirado' });
   default:
-    return res.status(401).json({ message: 'Erro desconhecido ao verificar o token' });
+    return res.status(401).json({ error: 'Erro desconhecido ao verificar o token' });
   }
 };
 
@@ -18,7 +18,7 @@ const authentication = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(401).json({ message: 'Token não encontrado' });
+    return res.status(401).json({ error: 'Token não encontrado' });
   }
 
   try {
