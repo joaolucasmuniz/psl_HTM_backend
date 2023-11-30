@@ -57,9 +57,29 @@ const deleteClient = async (req, res, next) => {
   }
 };
 
+const updateClient = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { accessLevel: accessLevelUser } = await req.user;
+    const { name, phone, email, address, postalcode, accessLevel } = req.body;
+
+    const client = await clientService.updateClient(id, {
+      name, phone, email, address, postalcode, accessLevel,
+    }, accessLevelUser);
+
+    console.log(client);
+
+    res.status(200).json(client);
+  } catch (error) {
+    console.error('Erro na função updateClient:', error);
+    next(error);
+  }
+};
+
 module.exports = {
   getAllClients,
   getClientsById,
   createClient,
   deleteClient,
+  updateClient,
 };

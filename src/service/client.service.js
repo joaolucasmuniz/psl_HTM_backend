@@ -31,9 +31,21 @@ const deleteClient = async (id, accessLevelUser) => {
   return client;
 };
 
+const updateClient = async (id, values, accessLevelUser) => {
+  const { accessLevel } = values;
+  if (accessLevel > accessLevelUser) {
+    const error = new Error('Usuário não autorizado');
+    error.status = 401;
+    throw error;
+  }
+  const client = await clientModel.updateClient(id, values);
+  return client;
+};
+
 module.exports = {
   getAllClients,
   getClientsById,
   createClient,
   deleteClient,
+  updateClient,
 };

@@ -17,4 +17,6 @@ clientRouter.post('/', validateUser, validadeEmail, clientsController.createClie
 
 clientRouter.delete('/:id', clientsController.deleteClient);
 
+clientRouter.put('/:id', validateUser, validadeEmail, clientsController.updateClient);
+
 module.exports = clientRouter;

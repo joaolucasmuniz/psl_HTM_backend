@@ -55,9 +55,27 @@ const deleteClient = async (id, accessLevelUser) => new Promise((resolve, reject
     });
 });
 
+const updateClient = async (id, values) => new Promise((resolve, reject) => {
+  const { name, phone, email, address, postalcode, accessLevel } = values;
+  db.run(`UPDATE clients SET name = ?, phone = ?, email = ?,
+  address = ?, postalcode = ?, access_level = ? WHERE id = ?`,
+  [name, phone, email, address, postalcode, accessLevel, id], function (err) {
+    if (err) {
+      reject(err);
+    } else if (this.changes === 0) {
+      const notFoundError = new Error('Cliente não encontrado / não autorizado');
+      notFoundError.status = 404;
+      reject(notFoundError);
+    } else {
+      resolve({ message: 'Cliente atualizado com sucesso!' });
+    }
+  });
+});
+
 module.exports = {
   getAllClients,
   getClientsById,
   createClient,
   deleteClient,
+  updateClient,
 };
